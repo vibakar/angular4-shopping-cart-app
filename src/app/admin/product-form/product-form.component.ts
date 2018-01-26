@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { CategoryService } from '../../services/category.service';
 import { ProductService } from '../../services/product.service';
+import { Product } from '../../models/product';
 import 'rxjs/add/operator/take';
 
 @Component({
@@ -13,7 +14,12 @@ import 'rxjs/add/operator/take';
 export class ProductFormComponent {
    categories$;
    products$;
-   product = {};
+   product:Product = {
+     title: '',
+     price: 0,
+     category: '',
+     imageUrl: ''
+   };
    productId;
    constructor(private categoryService:CategoryService, private productService:ProductService, private router:Router, private route: ActivatedRoute) { 
   	this.categories$ = this.categoryService.getAllCategories();

@@ -2,6 +2,14 @@
 	margin-bottom: 30px;
 }
 
-.card-footer{
+.card-footer {
 	padding: 0px;
+}
+
+.card-footer {
+	cursor: pointer;
+}
+
+.pt5 {
+	padding-top: 5px;
 }
