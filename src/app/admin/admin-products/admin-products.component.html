@@ -1,3 +1,43 @@
 <p>
-  admin-products works!
+	<a routerLink="/admin/products/new" class="btn btn-primary">Add New Product</a>
 </p>
+<p>
+	 <input type="text" class="form-control" placeholder="Search" #search (keyup)="filter(search.value)" />
+</p>
+
+<!-- <data-table [items]="items" [itemCount]="itemCount" (reload)="reloadItems($event)">
+	<data-table-column [property]="'title'" [header]="'Title'" [sortable]="true" [resizable]="true"></data-table-column>
+	<data-table-column [property]="'price'" [header]="'Price'" [sortable]="true" [resizable]="true">
+		<ng-template #dataTableCell let-item="item">
+			{{item.price | currency:'USD':'symbol'}}
+		</ng-template>
+	</data-table-column>
+	<data-table-column [property]="'$key'" [header]="'Operations'">
+		<ng-template #dataTableCell let-item="item">
+			<a [routerLink]="['/admin/products/', item.$key]">Edit</a> &nbsp;&nbsp;&nbsp;
+			<a href="Javascript:void(0)" (click)="deleteProduct(item.$key)">Delete</a>
+		</ng-template>
+	</data-table-column>
+</data-table> -->
+<table class="table">
+	<thead>
+		<tr>
+			<th>Title</th>
+			<th>Price</th>
+			<th>Operations</th>
+		</tr> 
+	</thead>
+	<tbody>
+		<tr *ngIf="filteredProducts.length == 0" class="text-center">
+			<td colspan="3">No Products Found</td>
+		</tr>
+		<tr *ngFor="let product of filteredProducts">
+			<td>{{product.title}}</td>
+			<td>{{product.price | currency:'USD':'symbol'}}</td>
+			<td>
+				<a [routerLink]="['/admin/products/', product.$key]">Edit</a> &nbsp;&nbsp;&nbsp;
+				<a href="Javascript:void(0)" (click)="deleteProduct(product.$key)">Delete</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
