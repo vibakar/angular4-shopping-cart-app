@@ -28,6 +28,8 @@ import { ProductFormComponent } from './admin/product-form/product-form.componen
 import { CategoryService } from './services/category.service';
 import { ProductService } from './services/product.service';
 import { DataTableModule } from 'angular-4-data-table';
+import { ProductsFilterComponent } from './products/products-filter/products-filter.component';
+import { ProductCardComponent } from './product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { DataTableModule } from 'angular-4-data-table';
     LoginComponent,
     AdminProductsComponent,
     AdminOrdersComponent,
-    ProductFormComponent
+    ProductFormComponent,
+    ProductsFilterComponent,
+    ProductCardComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +59,7 @@ import { DataTableModule } from 'angular-4-data-table';
     NgbModule.forRoot(),
     RouterModule.forRoot([{
       path: '',
-      component: HomeComponent
+      component: ProductsComponent
     }, {
       path: 'products',
       component: ProductsComponent

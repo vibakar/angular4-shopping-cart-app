@@ -16,7 +16,7 @@ export class ProductFormComponent {
    product = {};
    productId;
    constructor(private categoryService:CategoryService, private productService:ProductService, private router:Router, private route: ActivatedRoute) { 
-  	this.categories$ = this.categoryService.getCategories();
+  	this.categories$ = this.categoryService.getAllCategories();
   	this.productId = this.route.snapshot.paramMap.get('id');
   	if(this.productId){
   		this.productService.getProduct(this.productId).take(1).subscribe(p=>this.product=p);

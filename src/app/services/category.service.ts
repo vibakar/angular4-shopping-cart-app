@@ -6,7 +6,7 @@ export class CategoryService {
 
   constructor(private afdb:AngularFireDatabase) { }
 
-  getCategories(){
+  getAllCategories(){
   	return this.afdb.list('/categories', {
   		query: {
   			orderByChild: 'name'
