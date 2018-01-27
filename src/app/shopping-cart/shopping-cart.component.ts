@@ -39,4 +39,8 @@ export class ShoppingCartComponent implements OnInit {
   	this.shoppingCartService.addToCart(product);
   }
 
+  clearCart(){
+    this.shoppingCartService.clearCart();
+  }
+
 }

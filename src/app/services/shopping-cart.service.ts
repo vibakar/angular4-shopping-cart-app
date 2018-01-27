@@ -11,15 +11,28 @@ export class ShoppingCartService {
 
   constructor(private afdb:AngularFireDatabase) { }
 
+  getCart(){
+    let cartId =  this.getOrCreateCartId();
+    return this.afdb.object('/shopping-cart/'+cartId);
+  }
+
+  addToCart(product: Product){
+    this.updateItem(product, 1);
+  }
+
+  removeFromCart(product: Product){
+    this.updateItem(product, -1);
+  }
+
+  clearCart(){
+    let cartId = this.getOrCreateCartId();
+    this.afdb.object('/shopping-cart/'+cartId+'/items').remove();
+  }
+
   private create(){
   	return this.afdb.list('/shopping-cart').push({
   		createdAt: new Date().getTime()
   	});
-  }
-
-  getCart(){
-  	let cartId =  this.getOrCreateCartId();
-  	return this.afdb.object('/shopping-cart/'+cartId);
   }
 
   private getOrCreateCartId(){
@@ -30,14 +43,6 @@ export class ShoppingCartService {
   		localStorage.setItem('cartId', response.key);
   		return response.key;
   	});	
-  }
-
-  addToCart(product: Product){
-  	this.updateItem(product, 1);
-  }
-
-  removeFromCart(product: Product){
-  	this.updateItem(product, -1);
   }
 
   private updateItem(product:Product, change:number){
