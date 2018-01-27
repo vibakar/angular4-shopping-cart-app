@@ -10,7 +10,7 @@ import { ShoppingCartService } from '../services/shopping-cart.service';
 export class ProductCardComponent {
   @Input('product') product:Product;
   @Input('show-actions') showActions = true;
-  @Input('shopping-cart') shoppingCart;
+  @Input('shopping-cart') shoppingCart = {items: {}};
   constructor(private shoppingCartService:ShoppingCartService) { }
   
   addToCart(){
