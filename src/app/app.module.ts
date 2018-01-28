@@ -32,6 +32,7 @@ import { ProductsFilterComponent } from './products/products-filter/products-fil
 import { ProductCardComponent } from './product-card/product-card.component';
 import { ShoppingCartService } from './services/shopping-cart.service';
 import { ProductQuantityComponent } from './product-quantity/product-quantity.component';
+import { OrderService } from './services/order.service';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,7 @@ import { ProductQuantityComponent } from './product-quantity/product-quantity.co
       component: MyOrdersComponent,
       canActivate: [AuthGuardService]
     }, {
-      path: 'order-success',
+      path: 'order-success/:id',
       component: OrderSuccessComponent,
       canActivate: [AuthGuardService]
     }, {
@@ -106,7 +107,7 @@ import { ProductQuantityComponent } from './product-quantity/product-quantity.co
       pathMatch: 'full'
     }])
   ],
-  providers: [AuthService, AuthGuardService, UserService, AdminAuthGuardService, CategoryService, ProductService, ShoppingCartService],
+  providers: [AuthService, AuthGuardService, UserService, AdminAuthGuardService, CategoryService, ProductService, ShoppingCartService, OrderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
