@@ -12,22 +12,32 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./check-out.component.css']
 })
 export class CheckOutComponent implements OnInit, OnDestroy{ 
-  shipping = {}; 
+  shipping = {
+  	name: '',
+  	addressLine1: '',
+  	addressLine2: '',
+  	city: ''
+  }; 
   cartSubscription:Subscription;
   userSubscription: Subscription;
   items = [];
-  userId;
-  constructor(private router:Router, private shoppingCartService: ShoppingCartService, private orderService: OrderService, private authService:AuthService){
+  userId:string;
+  totalPrice:number = 0;
+  totalQuantity:number = 0;
 
-  }
+  constructor(private router:Router, private shoppingCartService: ShoppingCartService, private orderService: OrderService, private authService:AuthService){ }
 
   ngOnInit(){
   	this.userSubscription = this.authService.user$.subscribe(user=>this.userId=user.uid);
   	let cart$ = this.shoppingCartService.getCart();
   	this.cartSubscription= cart$.subscribe(cart=>{
+      this.totalQuantity = 0;
+      this.totalPrice = 0;
 	  	for(let pid in cart.items){
 	  		if(cart.items[pid].quantity > 0){
 	  			let p = cart.items[pid];
+          this.totalQuantity += p.quantity;
+          this.totalPrice += p.quantity * p.price;
 	  			this.items.push({
 		  			product: {
 		  				title: p.title,
@@ -43,13 +53,15 @@ export class CheckOutComponent implements OnInit, OnDestroy{
   }
 
   placeOrder() {
+    let date = new Date();
     let order = {
     	userId: this.userId,
-    	datePlaced: new Date().getTime(),
+    	datePlaced: date.getDate()+'-'+(date.getMonth()+1)+'-'+date.getFullYear(),
     	shipping: this.shipping,
     	items: this.items
     }
-    this.orderService.storeOrder(order).then((response)=>{
+    this.orderService.placeOrder(order).then((response)=>{
+      this.shoppingCartService.clearCart();
     	this.router.navigate(['/order-success',response.key]);
     });
   }   
