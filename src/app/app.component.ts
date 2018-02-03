@@ -16,6 +16,7 @@ export class AppComponent {
   			this.userService.save(user);
     		 let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
        	 if(returnUrl) this.router.navigateByUrl(returnUrl);
+         else if(window.location.pathname === '/login') this.router.navigateByUrl('/');
   		}
   	})
   }
