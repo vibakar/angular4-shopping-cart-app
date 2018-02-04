@@ -8,3 +8,15 @@
 button {
 	cursor: pointer;
 }
+
+p {
+	max-width: 80%;
+}
+
+p button {
+	float: right;
+}
+
+.va-m {
+	vertical-align: middle;
+}

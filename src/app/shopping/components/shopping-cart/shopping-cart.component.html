@@ -13,10 +13,10 @@
 		</thead>
 		<tbody>
 			<tr *ngFor="let item of items">
-				<td><div [style.backgroundImage]="'url('+item.imageUrl+')'" class="thumbnail"></div></td>
-				<td>{{item.title}}</td>
-				<td class="text-left"><product-quantity [product]='item' [shopping-cart]='cart'></product-quantity></td>
-				<td class="text-right">{{item.price * item.quantity | currency:'USD':'symbol'}}</td>
+				<td class="va-m"><div [style.backgroundImage]="'url('+item.imageUrl+')'" class="thumbnail"></div></td>
+				<td class="va-m">{{item.title}}</td>
+				<td class="va-m text-left"><product-quantity [product]='item' [shopping-cart]='cart'></product-quantity></td>
+				<td class="va-m text-right">{{item.price * item.quantity | currency:'USD':'symbol'}}</td>
 			</tr>
 			<tr *ngIf="items.length == 0">
 				<td colspan="4" class="text-center">No items found in your shopping cart</td>
