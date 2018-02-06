@@ -10,6 +10,7 @@ import { CheckOutComponent } from './components/check-out/check-out.component';
 import { OrderSuccessComponent } from './components/order-success/order-success.component';
 import { MyOrdersComponent } from './components/my-orders/my-orders.component';
 import { ProductsFilterComponent } from './components/products/products-filter/products-filter.component';
+import { OrderDetailsComponent } from 'shared/components/order-details/order-details.component';
 import { AuthGuardService } from 'shared/services/auth-guard.service';
 
 @NgModule({
@@ -26,6 +27,10 @@ import { AuthGuardService } from 'shared/services/auth-guard.service';
     }, {
       path: 'check-out',
       component: CheckOutComponent,
+      canActivate: [AuthGuardService]
+    }, {
+      path: 'orders/:id',
+      component: OrderDetailsComponent,
       canActivate: [AuthGuardService]
     }, {
       path: 'my/orders',

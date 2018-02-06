@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { OrderService } from 'shared/services/order.service';
 import { AuthService } from 'shared/services/auth.service';
 
@@ -9,10 +11,13 @@ import { AuthService } from 'shared/services/auth.service';
 })
 export class MyOrdersComponent implements OnInit {
   orders$;
-  constructor(private orderService:OrderService, private authService: AuthService) { }
+  constructor(private orderService:OrderService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
   	this.orders$ = this.authService.user$.switchMap(u=>this.orderService.getOrdersByUser(u.uid));
   }
 
+  orderDetails(id){
+  	this.router.navigate(['/orders/',id]);
+  }
 }

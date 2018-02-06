@@ -11,6 +11,7 @@ import { CategoryService } from './services/category.service';
 import { ProductService } from './services/product.service';
 import { UserService } from './services/user.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   declarations: [
     ProductCardComponent,
-    ProductQuantityComponent
+    ProductQuantityComponent,
+    OrderDetailsComponent
   ],
   exports: [
     ProductCardComponent,

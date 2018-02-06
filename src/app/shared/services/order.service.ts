@@ -19,6 +19,10 @@ export class OrderService {
   	})
   }
 
+  getOrdersById(orderId){
+    return this.afdb.object('/orders/'+orderId);
+  }
+
   getOrders(){
   	return this.afdb.list('/orders');
   }

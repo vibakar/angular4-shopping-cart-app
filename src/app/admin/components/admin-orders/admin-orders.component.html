@@ -11,7 +11,7 @@
 		<tr *ngFor="let order of orders$ | async">
 			<td>{{ order.shipping.name }}</td>
 			<td>{{ order.datePlaced }}</td>
-			<td>View</td>
+			<td><a href="javascript:void(0)" (click)="viewOrder(order.$key)">View Order</a></td>
 		</tr>
 	</tbody>
 </table>
