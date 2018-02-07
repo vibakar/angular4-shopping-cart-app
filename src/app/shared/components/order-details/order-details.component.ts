@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { OrderService } from 'shared/services/order.service';
 import { Subscription } from 'rxjs/Subscription';
+import { AuthService } from 'shared/services/auth.service';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'order-details',
@@ -11,9 +13,17 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class OrderDetailsComponent implements OnInit {
 
-  constructor(private route:ActivatedRoute, private orderService: OrderService) { }
+  constructor(private route:ActivatedRoute, private orderService: OrderService, private router: Router, private authService: AuthService) { }
   $items;
+  isAdmin:boolean;
   ngOnInit() {
+    this.authService.appUser$.subscribe(user=>{
+      if(user.isAdmin){
+        this.isAdmin = true;
+      } else{
+        this.isAdmin = false;
+      }
+    });
   	let orderId = this.route.snapshot.paramMap.get('id');
   	this.$items = this.orderService.getOrdersById(orderId);
   }
@@ -24,5 +34,10 @@ export class OrderDetailsComponent implements OnInit {
   		total += product.totalPrice;
   	})
   	return total;
+  }
+
+  processShipping(orderId){
+    this.orderService.updateOrderStatus(orderId);
+    this.router.navigate(['/admin/orders']);
   }
 }

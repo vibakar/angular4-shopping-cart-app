@@ -8,3 +8,7 @@
 .va-m {
 	vertical-align: middle;
 }
+
+button {
+	cursor: pointer;
+}

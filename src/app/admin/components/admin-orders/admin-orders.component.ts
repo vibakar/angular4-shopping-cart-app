@@ -18,4 +18,5 @@ export class AdminOrdersComponent implements OnInit {
   viewOrder(orderId){
   	this.router.navigate(['/orders', orderId]);
   }
+
 }

@@ -58,7 +58,8 @@ export class CheckOutComponent implements OnInit, OnDestroy{
     	userId: this.userId,
     	datePlaced: date.getDate()+'-'+(date.getMonth()+1)+'-'+date.getFullYear(),
     	shipping: this.shipping,
-    	items: this.items
+    	items: this.items,
+      status: 'waiting for shipping'
     }
     this.orderService.placeOrder(order).then((response)=>{
       this.shoppingCartService.clearCart();
