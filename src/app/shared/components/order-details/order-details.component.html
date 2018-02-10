@@ -29,7 +29,7 @@
 		</tfoot>
 	</table>
 	<div *ngIf="order.status!=='shipped' && isAdmin">
-		<a class="btn btn-secondary" routerLink="/admin/orders">Cancel</a>
+		<a class="btn btn-secondary" routerLink="/admin/orders">Go Back</a>
 	    <button type="button" class="btn btn-primary" (click)="processShipping(order.$key)">Process Shipping</button>
 	</div>
 	<div *ngIf="order.status==='shipped' && isAdmin">

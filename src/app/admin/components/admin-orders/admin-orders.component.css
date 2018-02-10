@@ -1,0 +1,11 @@
+button {
+	cursor: pointer;
+}
+
+button[disabled] {
+	cursor: not-allowed;
+}
+
+.pt-10 {
+	padding-top: 10px;
+}
