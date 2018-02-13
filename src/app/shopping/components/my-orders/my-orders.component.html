@@ -15,4 +15,4 @@
 		</tr>
 	</tbody>
 </table>
-<pagination-controls (pageChange)="p = $event"  autoHide="true"></pagination-controls>
+<pagination-controls *ngIf="orders$ | async as order" (pageChange)="p = $event"  autoHide="true"></pagination-controls>
