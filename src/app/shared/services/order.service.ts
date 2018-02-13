@@ -27,9 +27,10 @@ export class OrderService {
   	return this.afdb.list('/orders');
   }
 
-  updateOrderStatus(orderId){
+  updateOrderStatus(orderId, status){
     return this.afdb.object('orders/'+orderId).update({
-      status: 'shipped'
+      status: status
     })
   }
+
 }

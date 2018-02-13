@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { ProductsComponent } from './components/products/products.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
@@ -10,14 +11,15 @@ import { CheckOutComponent } from './components/check-out/check-out.component';
 import { OrderSuccessComponent } from './components/order-success/order-success.component';
 import { MyOrdersComponent } from './components/my-orders/my-orders.component';
 import { ProductsFilterComponent } from './components/products/products-filter/products-filter.component';
-import { OrderDetailsComponent } from 'shared/components/order-details/order-details.component';
 import { AuthGuardService } from 'shared/services/auth-guard.service';
+import { MyOrderDetailsComponent } from './components/my-order-details/my-order-details.component';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     FormsModule,
+    NgxPaginationModule,
     RouterModule.forChild([{
       path: 'products',
       component: ProductsComponent
@@ -29,8 +31,8 @@ import { AuthGuardService } from 'shared/services/auth-guard.service';
       component: CheckOutComponent,
       canActivate: [AuthGuardService]
     }, {
-      path: 'orders/:id',
-      component: OrderDetailsComponent,
+      path: 'my/orders/:id',
+      component: MyOrderDetailsComponent,
       canActivate: [AuthGuardService]
     }, {
       path: 'my/orders',
@@ -48,7 +50,8 @@ import { AuthGuardService } from 'shared/services/auth-guard.service';
     CheckOutComponent,
     OrderSuccessComponent,
     MyOrdersComponent,
-    ProductsFilterComponent
+    ProductsFilterComponent,
+    MyOrderDetailsComponent
   ]
 })
 export class ShoppingModule { }

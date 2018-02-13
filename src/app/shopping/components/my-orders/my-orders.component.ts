@@ -11,6 +11,7 @@ import { AuthService } from 'shared/services/auth.service';
 })
 export class MyOrdersComponent implements OnInit {
   orders$;
+  p:number = 1;
   constructor(private orderService:OrderService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
@@ -18,6 +19,6 @@ export class MyOrdersComponent implements OnInit {
   }
 
   orderDetails(id){
-  	this.router.navigate(['/orders/',id]);
+  	this.router.navigate(['my/orders/',id]);
   }
 }

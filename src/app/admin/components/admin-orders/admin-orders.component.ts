@@ -10,9 +10,10 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class AdminOrdersComponent implements OnInit, OnDestroy {
   orders;
-  filteredOrders;
+  filteredOrders = [];
   status:string = 'all';
   subscription:Subscription;
+  p:number = 1;
   constructor(private orderService: OrderService, private router: Router) { }
 
   ngOnInit() {
@@ -23,11 +24,11 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
   }
 
   viewOrder(orderId){
-  	this.router.navigate(['/orders', orderId]);
+  	this.router.navigate(['admin/order', orderId]);
   }
 
-  processShipping(orderId){
-    this.orderService.updateOrderStatus(orderId);
+  processShipping(orderId, status){
+    this.orderService.updateOrderStatus(orderId, status);
   }
 
   filterByStatus(status) {

@@ -1,18 +1,20 @@
 <h1>
 	Order Details
 </h1>
-<div class="row col-10" *ngIf="$items | async as order">
+<div class="row col-10" *ngIf="items | async as order">
 	<table class="table">
 		<thead>
 			<tr>
-				<th></th>
+				<th>Status</th>
+				<th>Image</th>
 				<th>Product</th>
 				<th>Quantity</th>
 				<th>Price</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let item of order.items">
+			<tr *ngFor="let item of order.items;let i = index">
+				<td class="va-m" *ngIf="i==0" [attr.rowspan]="order.items.length">{{order.status}}</td>
 				<td class="va-m"><div [style.backgroundImage]="'url('+item.product.imageUrl+')'" class="thumbnail"></div></td>
 				<td class="va-m">{{item.product.title}}</td>
 				<td class="va-m">{{item.quantity}}</td>
@@ -23,19 +25,18 @@
 			<tr>
 				<th></th>
 				<th></th>
+				<th></th>
 				<th>Total Price</th>
 				<th>{{getTotal(order) | currency:'USD':'symbol'}}</th>
 			</tr>
 		</tfoot>
 	</table>
-	<div *ngIf="order.status!=='shipped' && isAdmin">
+	<!-- <div *ngIf="order.status!=='shipped' && isAdmin">
 		<a class="btn btn-secondary" routerLink="/admin/orders">Go Back</a>
-	    <button type="button" class="btn btn-primary" (click)="processShipping(order.$key)">Process Shipping</button>
+	    <button type="button" class="btn btn-primary"
+	     (click)="updateOrderStatus(order.$key, 'shipped')">Process Shipping</button>
 	</div>
 	<div *ngIf="order.status==='shipped' && isAdmin">
          <a class="btn btn-secondary" routerLink="/admin/orders">Go Back</a>
-	</div>
-	<div *ngIf="!isAdmin">
-         <a class="btn btn-secondary" routerLink="/my/orders">Go Back</a>
-	</div>
+	</div> -->
 </div>

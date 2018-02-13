@@ -9,6 +9,7 @@
 				<option value="all">All</option>
 				<option value="waiting for shipping">Waiting for Shipping</option>
 				<option value="shipped">Shipped</option>
+				<option value="cancelled">Cancelled</option>
 			</select>
 		</div>
 	</div>
@@ -26,17 +27,18 @@
 		<tr *ngIf="filteredOrders && filteredOrders.length === 0"> 
 			<td  colspan="4" class="text-center">No orders found for "{{status}}"</td>
 		</tr>
-		<tr *ngFor="let order of filteredOrders">
+		<tr *ngFor="let order of filteredOrders | paginate: { itemsPerPage: 10, currentPage: p }">
 			<td>{{ order.shipping.name }}</td>
 			<td>{{ order.datePlaced }}</td>
 			<td>{{ order.status }}</td>
 			<td>
 				<a class="btn btn-primary btn-sm" href="javascript:void(0)" (click)="viewOrder(order.$key)">View Order
 				</a>&nbsp;&nbsp;&nbsp;
-				<button class="btn btn-secondary btn-sm" (click)="processShipping(order.$key)" [disabled]="order.status === 'shipped'">
+				<button class="btn btn-secondary btn-sm" (click)="processShipping(order.$key, 'shipped')" [disabled]="order.status === 'shipped' || order.status === 'cancelled'">
 				Start Shipping
 			    </button>
 			</td>
 		</tr>
 	</tbody>
 </table>
+<pagination-controls (pageChange)="p = $event"  autoHide="true"></pagination-controls>

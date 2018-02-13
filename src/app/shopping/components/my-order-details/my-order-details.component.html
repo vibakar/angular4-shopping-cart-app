@@ -1,0 +1,6 @@
+<order-details [items]="$items"></order-details>
+<div *ngIf="$items | async as order">
+	<a class="btn btn-secondary" routerLink="/my/orders">Go Back</a>
+	<button class="btn btn-danger" *ngIf="order.status!=='cancelled'" 
+	(click)="updateOrderStatus(order.$key, 'cancelled')">Cancel Order</button>
+</div>

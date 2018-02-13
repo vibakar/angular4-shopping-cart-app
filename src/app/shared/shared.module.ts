@@ -27,7 +27,8 @@ import { OrderDetailsComponent } from './components/order-details/order-details.
   ],
   exports: [
     ProductCardComponent,
-    ProductQuantityComponent
+    ProductQuantityComponent,
+    OrderDetailsComponent
   ],
   providers: [
   	AuthService,

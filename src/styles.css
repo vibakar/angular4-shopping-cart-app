@@ -5,3 +5,11 @@
 body{
 	padding-top: 80px;
 }
+
+button {
+	cursor: pointer;
+}
+
+button[disabled] {
+	cursor: not-allowed;
+}

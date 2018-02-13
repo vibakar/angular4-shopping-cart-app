@@ -12,7 +12,8 @@ export class AdminProductsComponent implements OnDestroy{
   products: Product[];
   subscription: Subscription;
   filteredProducts: any[] = [];
-
+  p:number = 1;
+  
   constructor(private productService:ProductService) { 
     this.subscription = this.productService.getAllProducts()
                           .subscribe((p)=>this.filteredProducts = this.products = p);

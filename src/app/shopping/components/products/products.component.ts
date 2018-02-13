@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import { Observable } from 'rxjs';
+import { DOCUMENT } from '@angular/platform-browser';
 
 import { ProductService } from 'shared/services/product.service';
 import { ShoppingCartService } from 'shared/services/shopping-cart.service';
@@ -17,8 +18,9 @@ export class ProductsComponent implements OnInit {
   filteredProducts: Product[] = [];
   category: string;
   cart$: Observable<Product>;
+  p:number = 1;
 
-  constructor(private productService: ProductService, private route:ActivatedRoute, private shoppingCartService:ShoppingCartService) { 
+  constructor(@Inject(DOCUMENT) private document: Document, private productService: ProductService, private route:ActivatedRoute, private shoppingCartService:ShoppingCartService) { 
   }
 
   ngOnInit() {
@@ -35,6 +37,10 @@ export class ProductsComponent implements OnInit {
       this.category = params.get('category');
       this.filteredProducts = this.category ? this.products.filter((p)=>p.category===this.category) : this.products;
     });
+  }
+  
+  goToTop(){
+    window.scrollTo(0, 0);
   }
 
 }

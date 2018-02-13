@@ -8,10 +8,11 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let order of orders$ | async">
+		<tr *ngFor="let order of orders$ | async | paginate: { itemsPerPage: 10, currentPage: p }">
 			<td>{{ order.datePlaced }}</td>
 			<td>{{ order.status }}</td>
 			<td><a href="javascript:void(0)" (click)="orderDetails(order.$key)">Order Details</a></td>
 		</tr>
 	</tbody>
 </table>
+<pagination-controls (pageChange)="p = $event"  autoHide="true"></pagination-controls>
