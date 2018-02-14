@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 import { ProductsComponent } from './components/products/products.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
@@ -20,6 +21,7 @@ import { MyOrderDetailsComponent } from './components/my-order-details/my-order-
     SharedModule,
     FormsModule,
     NgxPaginationModule,
+    Ng4LoadingSpinnerModule.forRoot(),
     RouterModule.forChild([{
       path: 'products',
       component: ProductsComponent

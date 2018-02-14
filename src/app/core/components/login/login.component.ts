@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
 import { AuthService } from 'shared/services/auth.service';
 
 @Component({
@@ -8,9 +10,10 @@ import { AuthService } from 'shared/services/auth.service';
 })
 export class LoginComponent {
 
-  constructor(private auth:AuthService) { }
+  constructor(private auth:AuthService, private spinnerService: Ng4LoadingSpinnerService) { }
 
   login(){
+  	this.spinnerService.show();
   	this.auth.login();
   }
 }

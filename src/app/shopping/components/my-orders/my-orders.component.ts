@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 import { OrderService } from 'shared/services/order.service';
 import { AuthService } from 'shared/services/auth.service';
@@ -12,10 +13,13 @@ import { AuthService } from 'shared/services/auth.service';
 export class MyOrdersComponent implements OnInit {
   orders$;
   p:number = 1;
-  constructor(private orderService:OrderService, private authService: AuthService, private router: Router) { }
+  constructor(private orderService:OrderService, private authService: AuthService, private router: Router, private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
-  	this.orders$ = this.authService.user$.switchMap(u=>this.orderService.getOrdersByUser(u.uid));
+    this.spinnerService.show();
+  	this.orders$ = this.authService.user$.switchMap(u=>{
+      return this.orderService.getOrdersByUser(u.uid)
+    });
   }
 
   orderDetails(id){

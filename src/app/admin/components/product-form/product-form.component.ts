@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import 'rxjs/add/operator/take';
 
 import { CategoryService } from 'shared/services/category.service';
 import { ProductService } from 'shared/services/product.service';
 import { Product } from 'shared/models/product';
-import 'rxjs/add/operator/take';
 
 @Component({
   selector: 'app-product-form',
@@ -21,12 +22,18 @@ export class ProductFormComponent {
      imageUrl: ''
    };
    productId;
-   constructor(private categoryService:CategoryService, private productService:ProductService, private router:Router, private route: ActivatedRoute) { 
-  	this.categories$ = this.categoryService.getAllCategories();
+   constructor(private categoryService:CategoryService, private productService:ProductService, private router:Router, private route: ActivatedRoute,private spinnerService: Ng4LoadingSpinnerService) { 
+  	this.spinnerService.show();
+    this.categories$ = this.categoryService.getAllCategories();
   	this.productId = this.route.snapshot.paramMap.get('id');
   	if(this.productId){
-  		this.productService.getProduct(this.productId).take(1).subscribe(p=>this.product=p);
-  	}
+  		this.productService.getProduct(this.productId).take(1).subscribe(p=>{
+        this.spinnerService.hide();
+        return this.product=p;
+      });
+  	}else {
+      this.spinnerService.hide();
+    }
   }
 
   save(product){

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingCartService } from 'shared/services/shopping-cart.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -11,10 +12,12 @@ export class ShoppingCartComponent implements OnInit {
   items = [];
   totalPrice:number;
   cart;
-  constructor(private shoppingCartService:ShoppingCartService) { }
+  constructor(private shoppingCartService:ShoppingCartService, private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
+    this.spinnerService.show();
   	this.shoppingCartService.getCart().subscribe(cart=>{
+      this.spinnerService.hide();
   	  this.cart = cart;
       this.shoppingCartItemCount = 0;
       this.totalPrice = 0;

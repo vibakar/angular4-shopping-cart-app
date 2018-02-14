@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { OrderService } from 'shared/services/order.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
+import { OrderService } from 'shared/services/order.service';
 
 @Component({
   selector: 'app-admin-orders',
@@ -14,10 +16,12 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
   status:string = 'all';
   subscription:Subscription;
   p:number = 1;
-  constructor(private orderService: OrderService, private router: Router) { }
+  constructor(private orderService: OrderService, private router: Router,private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
+    this.spinnerService.show();
   	this.subscription = this.orderService.getOrders().subscribe(o=>{
+      this.spinnerService.hide();
       this.orders = o;
       this.filteredOrders = o;
     });

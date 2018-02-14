@@ -9,6 +9,7 @@
 	</thead>
 	<tbody>
 		<tr *ngFor="let order of orders$ | async | paginate: { itemsPerPage: 10, currentPage: p }">
+			{{ spinnerService.hide() }}
 			<td>{{ order.datePlaced }}</td>
 			<td>{{ order.status }}</td>
 			<td><a href="javascript:void(0)" (click)="orderDetails(order.$key)">Order Details</a></td>
@@ -16,3 +17,4 @@
 	</tbody>
 </table>
 <pagination-controls *ngIf="orders$ | async as order" (pageChange)="p = $event"  autoHide="true"></pagination-controls>
+<ng4-loading-spinner [loadingText]="'Loading...'"> </ng4-loading-spinner>

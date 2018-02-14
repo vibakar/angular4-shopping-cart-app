@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 import { AdminOrdersComponent } from './components/admin-orders/admin-orders.component';
 import { AdminProductsComponent } from './components/admin-products/admin-products.component';
@@ -18,6 +19,7 @@ import { AdminOrderDetailsComponent } from './components/admin-order-details/adm
     FormsModule,
     SharedModule,
     NgxPaginationModule,
+    Ng4LoadingSpinnerModule.forRoot(),
     RouterModule.forChild([{
       path: 'admin/products/new',
       component: ProductFormComponent,

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 import { OrderService } from 'shared/services/order.service';
 
@@ -10,9 +11,10 @@ import { OrderService } from 'shared/services/order.service';
 })
 export class MyOrderDetailsComponent implements OnInit {
 
-  constructor(private route:ActivatedRoute, private router: Router, private orderService: OrderService) { }
+  constructor(private route:ActivatedRoute, private router: Router, private orderService: OrderService, private spinnerService: Ng4LoadingSpinnerService) { }
   $items;
   ngOnInit() {
+    this.spinnerService.show();
   	let orderId = this.route.snapshot.paramMap.get('id');
   	this.$items = this.orderService.getOrdersById(orderId);
   }

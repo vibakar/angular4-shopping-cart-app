@@ -11,6 +11,7 @@ import { SharedModule } from './shared/shared.module';
 import { AdminModule } from './admin/admin.module';
 import { ShoppingModule } from './shopping/shopping.module';
 import { CoreModule } from './core/core.module';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -32,6 +33,7 @@ import { ProductsComponent } from './shopping/components/products/products.compo
     FormsModule,
     CustomFormsModule,
     NgbModule.forRoot(),
+    Ng4LoadingSpinnerModule.forRoot(),
     RouterModule.forRoot([{
       path: '',
       component: ProductsComponent

@@ -1,7 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ProductService } from 'shared/services/product.service';
 import { Subscription }  from 'rxjs/Subscription';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
 import { Product } from 'shared/models/product';
+import { ProductService } from 'shared/services/product.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -14,9 +16,13 @@ export class AdminProductsComponent implements OnDestroy{
   filteredProducts: any[] = [];
   p:number = 1;
   
-  constructor(private productService:ProductService) { 
+  constructor(private productService:ProductService,private spinnerService: Ng4LoadingSpinnerService) { 
+    this.spinnerService.show();
     this.subscription = this.productService.getAllProducts()
-                          .subscribe((p)=>this.filteredProducts = this.products = p);
+                          .subscribe((p)=>{
+                            this.spinnerService.hide();
+                            return this.filteredProducts = this.products = p
+                          });
   }
 
   deleteProduct(productId){

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 import { ShoppingCartService } from 'shared/services/shopping-cart.service';
 import { OrderService } from 'shared/services/order.service';
@@ -25,12 +26,14 @@ export class CheckOutComponent implements OnInit, OnDestroy{
   totalPrice:number = 0;
   totalQuantity:number = 0;
 
-  constructor(private router:Router, private shoppingCartService: ShoppingCartService, private orderService: OrderService, private authService:AuthService){ }
+  constructor(private router:Router, private shoppingCartService: ShoppingCartService, private orderService: OrderService, private authService:AuthService, private spinnerService: Ng4LoadingSpinnerService){ }
 
   ngOnInit(){
+    this.spinnerService.show();
   	this.userSubscription = this.authService.user$.subscribe(user=>this.userId=user.uid);
   	let cart$ = this.shoppingCartService.getCart();
   	this.cartSubscription= cart$.subscribe(cart=>{
+      this.spinnerService.hide();
       this.totalQuantity = 0;
       this.totalPrice = 0;
 	  	for(let pid in cart.items){
@@ -53,6 +56,7 @@ export class CheckOutComponent implements OnInit, OnDestroy{
   }
 
   placeOrder() {
+    this.spinnerService.show();
     let date = new Date();
     let order = {
     	userId: this.userId,
@@ -62,6 +66,7 @@ export class CheckOutComponent implements OnInit, OnDestroy{
       status: 'waiting for shipping'
     }
     this.orderService.placeOrder(order).then((response)=>{
+      this.spinnerService.hide();
       this.shoppingCartService.clearCart();
     	this.router.navigate(['/order-success',response.key]);
     });
