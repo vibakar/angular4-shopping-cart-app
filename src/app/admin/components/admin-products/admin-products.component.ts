@@ -4,6 +4,8 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 import { Product } from 'shared/models/product';
 import { ProductService } from 'shared/services/product.service';
+import { ModalService } from 'shared/services/modal.service';
+
 
 @Component({
   selector: 'app-admin-products',
@@ -16,7 +18,7 @@ export class AdminProductsComponent implements OnDestroy{
   filteredProducts: any[] = [];
   p:number = 1;
   
-  constructor(private productService:ProductService,private spinnerService: Ng4LoadingSpinnerService) { 
+  constructor(private productService:ProductService,private spinnerService: Ng4LoadingSpinnerService, private modalService:ModalService) { 
     this.spinnerService.show();
     this.subscription = this.productService.getAllProducts()
                           .subscribe((p)=>{
@@ -25,8 +27,13 @@ export class AdminProductsComponent implements OnDestroy{
                           });
   }
 
-  deleteProduct(productId){
-  	this.productService.deleteProduct(productId);
+  deleteProduct(product){
+    this.modalService.confirm('Warning', `Are you sure to delete "${product.title}"?`)
+                     .subscribe((response)=>{
+                        if(response){
+                          this.productService.deleteProduct(product.$key);                          
+                        }
+                      });
   }
 
   filter(query: string){

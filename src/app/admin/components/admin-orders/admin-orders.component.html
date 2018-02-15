@@ -5,7 +5,7 @@
 	<div class="col-9">
 		<div class="form-group form-inline float-right pt-10">
 			<label for="status"><strong>Filter By Status:</strong></label>
-			<select class="form-control" [(ngModel)]="status" (change)="filterByStatus(status)">
+			<select class="form-control" [(ngModel)]="currentStatus" (change)="filterByStatus(currentStatus)">
 				<option value="all">All</option>
 				<option value="waiting for shipping">Waiting for Shipping</option>
 				<option value="shipped">Shipped</option>
@@ -25,7 +25,7 @@
 	</thead>
 	<tbody>
 		<tr *ngIf="filteredOrders && filteredOrders.length === 0"> 
-			<td  colspan="4" class="text-center">No orders found for "{{status}}"</td>
+			<td  colspan="4" class="text-center">No orders found for "{{currentStatus}}"</td>
 		</tr>
 		<tr *ngFor="let order of filteredOrders | paginate: { itemsPerPage: 10, currentPage: p }">
 			<td>{{ order.shipping.name }}</td>

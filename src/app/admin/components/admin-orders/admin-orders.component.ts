@@ -13,7 +13,7 @@ import { OrderService } from 'shared/services/order.service';
 export class AdminOrdersComponent implements OnInit, OnDestroy {
   orders;
   filteredOrders = [];
-  status:string = 'all';
+  currentStatus:string = 'all';
   subscription:Subscription;
   p:number = 1;
   constructor(private orderService: OrderService, private router: Router,private spinnerService: Ng4LoadingSpinnerService) { }
@@ -33,6 +33,7 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
 
   processShipping(orderId, status){
     this.orderService.updateOrderStatus(orderId, status);
+    this.filterByStatus('waiting for shipping');
   }
 
   filterByStatus(status) {

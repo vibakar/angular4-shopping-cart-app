@@ -21,7 +21,7 @@
 			<td>{{product.price | currency:'USD':'symbol'}}</td>
 			<td>
 				<a [routerLink]="['/admin/products/', product.$key]">Edit</a> &nbsp;&nbsp;&nbsp;
-				<a href="Javascript:void(0)" (click)="deleteProduct(product.$key)">Delete</a>
+				<a href="Javascript:void(0)" (click)="deleteProduct(product)">Delete</a>
 			</td>
 		</tr>
 	</tbody>
