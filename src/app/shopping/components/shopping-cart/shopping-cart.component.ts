@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingCartService } from 'shared/services/shopping-cart.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -12,7 +13,7 @@ export class ShoppingCartComponent implements OnInit {
   items = [];
   totalPrice:number;
   cart;
-  constructor(private shoppingCartService:ShoppingCartService, private spinnerService: Ng4LoadingSpinnerService) { }
+  constructor(private shoppingCartService:ShoppingCartService, private spinnerService: Ng4LoadingSpinnerService, private snackbar: MatSnackBar) { }
 
   ngOnInit() {
     this.spinnerService.show();
@@ -44,6 +45,9 @@ export class ShoppingCartComponent implements OnInit {
 
   clearCart(){
     this.shoppingCartService.clearCart();
+    this.snackbar.open("Cart cleared successfully!!", 'OK', {
+                    duration: 3000
+                  }); 
   }
 
 }

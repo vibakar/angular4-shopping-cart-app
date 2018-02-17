@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { MatSnackBar } from '@angular/material';
 
 import { OrderService } from 'shared/services/order.service';
 import { ModalService } from 'shared/services/modal.service';
@@ -12,7 +13,7 @@ import { ModalService } from 'shared/services/modal.service';
 })
 export class MyOrderDetailsComponent implements OnInit {
 
-  constructor(private route:ActivatedRoute, private router: Router, private orderService: OrderService, private spinnerService: Ng4LoadingSpinnerService, private modalService:ModalService) { }
+  constructor(private route:ActivatedRoute, private router: Router, private orderService: OrderService, private spinnerService: Ng4LoadingSpinnerService, private modalService:ModalService, private snackbar: MatSnackBar) { }
   $items;
   ngOnInit() {
     this.spinnerService.show();
@@ -26,6 +27,9 @@ export class MyOrderDetailsComponent implements OnInit {
                          if(response){
                            this.orderService.updateOrderStatus(orderId, status);
                            this.router.navigate(['/my/orders']);
+                            this.snackbar.open(`Order "${status}" successfully!!`, 'OK', {
+                                          duration: 3000
+                                        }); 
                          }
                        }));
   }
