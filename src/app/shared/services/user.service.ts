@@ -18,4 +18,8 @@ export class UserService {
   get(uid:string):FirebaseObjectObservable<User>{
   	return this.afdb.object('users/'+uid);
   }
+
+  saveAddress(userId, address) {
+    return this.afdb.object('users/'+userId+'/address').update(address);
+  }
 }

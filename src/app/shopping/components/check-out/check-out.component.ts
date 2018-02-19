@@ -6,6 +6,8 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ShoppingCartService } from 'shared/services/shopping-cart.service';
 import { OrderService } from 'shared/services/order.service';
 import { AuthService } from 'shared/services/auth.service';
+import { UserService } from 'shared/services/user.service';
+
 
 @Component({
   selector: 'check-out',
@@ -25,14 +27,27 @@ export class CheckOutComponent implements OnInit, OnDestroy{
   userId:string;
   totalPrice:number = 0;
   totalQuantity:number = 0;
+  isAddress;
+  newAddress = [];
 
-  constructor(private router:Router, private shoppingCartService: ShoppingCartService, private orderService: OrderService, private authService:AuthService, private spinnerService: Ng4LoadingSpinnerService){ }
+  constructor(private router:Router, private shoppingCartService: ShoppingCartService, private orderService: OrderService, private authService:AuthService, private spinnerService: Ng4LoadingSpinnerService, private userService:UserService){ }
 
   ngOnInit(){
     this.spinnerService.show();
-  	this.userSubscription = this.authService.user$.subscribe(user=>this.userId=user.uid);
-  	let cart$ = this.shoppingCartService.getCart();
-  	this.cartSubscription= cart$.subscribe(cart=>{
+    this.userSubscription = this.authService.user$.switchMap(user=>{
+       this.userId=user.uid;
+       this.shipping.name = user.displayName;
+       return this.userService.get(user.uid)
+    }).subscribe(u=>{
+        if(u.address){
+          this.isAddress = true;
+          this.newAddress = u.address;
+        } else {
+          this.isAddress = false;
+        }
+     });
+
+  	this.cartSubscription= this.shoppingCartService.getCart().subscribe(cart=>{
       this.spinnerService.hide();
       this.totalQuantity = 0;
       this.totalPrice = 0;
@@ -53,9 +68,10 @@ export class CheckOutComponent implements OnInit, OnDestroy{
 	  		}
 	  	}
   	});
+
   }
 
-  placeOrder() {
+  placeOrder(type) {
     this.spinnerService.show();
     let date = new Date();
     let order = {
@@ -65,12 +81,30 @@ export class CheckOutComponent implements OnInit, OnDestroy{
     	items: this.items,
       status: 'waiting for shipping'
     }
-    this.orderService.placeOrder(order).then((response)=>{
-      this.spinnerService.hide();
-      this.shoppingCartService.clearCart();
-    	this.router.navigate(['/order-success',response.key]);
-    });
-  }   
+    if(type == 'new'){
+      this.newAddress.push(this.shipping);
+      this.orderService.placeOrderWithNewAddress(order, this.userId, this.newAddress).then((response)=>{
+        this.spinnerService.hide();
+        this.shoppingCartService.clearCart();
+        this.router.navigate(['/order-success',response.key]);
+      });
+    } else {
+      this.orderService.placeOrderWithExistingAddress(order).then((response)=>{
+        this.spinnerService.hide();
+        this.shoppingCartService.clearCart();
+        this.router.navigate(['/order-success',response.key]);
+      });
+    }
+
+  }
+
+  addNewAddress(){
+    this.isAddress = false;
+  }
+
+  cancelAddAddress(){
+    this.isAddress = true;
+  }
 
   ngOnDestroy() {
   	this.cartSubscription.unsubscribe();

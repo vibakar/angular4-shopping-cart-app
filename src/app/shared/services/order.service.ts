@@ -1,13 +1,21 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 
+import { UserService } from 'shared/services/user.service';
+
 @Injectable()
 export class OrderService {
 
-  constructor(private afdb:AngularFireDatabase) { }
+  constructor(private afdb:AngularFireDatabase, private userService:UserService) { }
 
-  placeOrder(order){
-  	return this.afdb.list('/orders').push(order);
+  placeOrderWithNewAddress(order, userId, address){
+  	return this.userService.saveAddress(userId, address).then((response)=>{
+      return this.afdb.list('/orders').push(order);
+    });
+  }
+
+  placeOrderWithExistingAddress(order){
+      return this.afdb.list('/orders').push(order);
   }
 
   getOrdersByUser(userId){

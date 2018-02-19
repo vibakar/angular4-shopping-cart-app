@@ -1,10 +1,10 @@
 <h2>Shipping</h2>
 <div class="row">
   <div class="col-6">
-    <form #f="ngForm">
+    <form #f="ngForm" *ngIf="!isAddress">
       <div class="form-group">
         <label for="name">Name</label>
-        <input #name="ngModel" name="name" [(ngModel)]="shipping.name" type="text" class="form-control" placeholder="Name" required />
+        <input #name="ngModel" name="name" [(ngModel)]="shipping.name" type="text" class="form-control" placeholder="Name" required disabled="disabled" />
         <div class="alert alert-danger" *ngIf="name.touched && name.invalid">
           <div *ngIf="name.errors.required">Name is required.</div>
         </div>
@@ -30,10 +30,24 @@
           <div *ngIf="city.errors.required">City is required.</div>
         </div>
       </div>
+      <button *ngIf="!isAddress" (click)="cancelAddAddress()" class="btn btn-secondary">Cancel</button>
       <button 
-        (click)="placeOrder()" [disabled]='name.invalid || addressLine1.invalid || addressLine2.invalid || city.invalid'
-        class="btn btn-primary">Place Order</button>
+        (click)="placeOrder('new')" [disabled]='name.invalid || addressLine1.invalid || addressLine2.invalid || city.invalid'
+        class="btn btn-primary">Save and Deliver Here</button>
     </form>
+    <div *ngIf="isAddress">
+      <div class="card mb-10" *ngFor="let adr of newAddress; let i = index">
+        <div class="card-body pb-0">
+          <h5 class="card-title">Address {{ i + 1 }} </h5>
+          <p class="card-text">{{ adr.name }}</p>
+          <p class="card-text">{{ adr.addressLine1 }}</p>
+          <p class="card-text">{{ adr.addressLine2 }}</p>
+          <p class="card-text float-left">{{ adr.city }}</p>
+          <button (click)="placeOrder('existing')" class="btn btn-secondary float-right">Deliver Here</button>
+        </div>
+   `  </div>
+    </div>
+    <p><button *ngIf="isAddress" (click)="addNewAddress()" class="btn btn-primary">Add New Address</button></p>
   </div>
   <div class="col-6">
     <div class="card">
