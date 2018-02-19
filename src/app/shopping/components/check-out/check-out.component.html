@@ -36,9 +36,13 @@
         class="btn btn-primary">Save and Deliver Here</button>
     </form>
     <div *ngIf="isAddress">
-      <div class="card mb-10" *ngFor="let adr of newAddress; let i = index">
+      <div class="card mb-10" *ngFor="let adr of address; let i = index">
         <div class="card-body pb-0">
-          <h5 class="card-title">Address {{ i + 1 }} </h5>
+          <h5 class="card-title">Address {{ i + 1 }} 
+            <span class="float-right">
+              <i class="fa fa-trash" (click)="deleteAddress(i)"></i>
+            </span>
+          </h5>
           <p class="card-text">{{ adr.name }}</p>
           <p class="card-text">{{ adr.addressLine1 }}</p>
           <p class="card-text">{{ adr.addressLine2 }}</p>

@@ -5,3 +5,7 @@
 .pb-0 {
 	padding-bottom: 0px;
 }
+
+i {
+	cursor: pointer;
+}

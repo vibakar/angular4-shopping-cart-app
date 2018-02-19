@@ -45,7 +45,7 @@ export class ShoppingCartComponent implements OnInit {
 
   clearCart(){
     this.shoppingCartService.clearCart();
-    this.snackbar.open("Cart cleared successfully!!", 'OK', {
+    this.snackbar.open("Cart Cleared Successfully!!", 'OK', {
                     duration: 3000
                   }); 
   }

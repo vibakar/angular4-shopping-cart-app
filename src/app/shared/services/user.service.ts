@@ -22,4 +22,10 @@ export class UserService {
   saveAddress(userId, address) {
     return this.afdb.object('users/'+userId+'/address').update(address);
   }
+
+  deleteAddress(userId, address){
+    return this.afdb.object('users/'+userId).update({
+      address: address
+    });
+  }
 }
