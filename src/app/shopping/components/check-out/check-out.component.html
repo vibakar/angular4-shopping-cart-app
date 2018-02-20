@@ -30,9 +30,9 @@
           <div *ngIf="city.errors.required">City is required.</div>
         </div>
       </div>
-      <button *ngIf="!isAddress" (click)="cancelAddAddress()" class="btn btn-secondary">Cancel</button>
+      <button *ngIf="address.length > 0" (click)="cancelAddAddress()" class="btn btn-secondary">Cancel</button>
       <button 
-        (click)="placeOrder('new')" [disabled]='name.invalid || addressLine1.invalid || addressLine2.invalid || city.invalid'
+        (click)="placeOrder()" [disabled]='name.invalid || addressLine1.invalid || addressLine2.invalid || city.invalid'
         class="btn btn-primary">Save and Deliver Here</button>
     </form>
     <div *ngIf="isAddress">
@@ -40,14 +40,14 @@
         <div class="card-body pb-0">
           <h5 class="card-title">Address {{ i + 1 }} 
             <span class="float-right">
-              <i class="fa fa-trash" (click)="deleteAddress(i)"></i>
+              <i class="fa fa-edit" (click)="editAddress(i, adr)"></i>&nbsp;&nbsp;&nbsp;<i class="fa fa-trash" (click)="deleteAddress(i)"></i>
             </span>
           </h5>
           <p class="card-text">{{ adr.name }}</p>
           <p class="card-text">{{ adr.addressLine1 }}</p>
           <p class="card-text">{{ adr.addressLine2 }}</p>
           <p class="card-text float-left">{{ adr.city }}</p>
-          <button (click)="placeOrder('existing')" class="btn btn-secondary float-right">Deliver Here</button>
+          <button (click)="placeOrder(adr)" class="btn btn-secondary float-right">Deliver Here</button>
         </div>
    `  </div>
     </div>

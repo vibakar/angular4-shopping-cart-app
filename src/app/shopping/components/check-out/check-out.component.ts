@@ -30,6 +30,7 @@ export class CheckOutComponent implements OnInit, OnDestroy{
   totalQuantity:number = 0;
   isAddress;
   address = [];
+  editAddressIndex;
 
   constructor(private router:Router, private shoppingCartService: ShoppingCartService, private orderService: OrderService, private authService:AuthService, private spinnerService: Ng4LoadingSpinnerService, private userService:UserService, private modalService:ModalService, private snackbar: MatSnackBar){ }
 
@@ -72,8 +73,11 @@ export class CheckOutComponent implements OnInit, OnDestroy{
 
   }
 
-  placeOrder(type) {
+  placeOrder(adr) {
     this.spinnerService.show();
+    if(this.editAddressIndex >= 0){
+      this.address.splice(this.editAddressIndex, 1);
+    }
     let date = new Date();
     let order = {
     	userId: this.userId,
@@ -82,7 +86,7 @@ export class CheckOutComponent implements OnInit, OnDestroy{
     	items: this.items,
       status: 'waiting for shipping'
     }
-    if(type == 'new'){
+    if(!adr){
       this.address.push(this.shipping);
       this.orderService.placeOrderWithNewAddress(order, this.userId, this.address).then((response)=>{
         this.spinnerService.hide();
@@ -90,6 +94,7 @@ export class CheckOutComponent implements OnInit, OnDestroy{
         this.router.navigate(['/order-success',response.key]);
       });
     } else {
+      order.shipping = adr;
       this.orderService.placeOrderWithExistingAddress(order).then((response)=>{
         this.spinnerService.hide();
         this.shoppingCartService.clearCart();
@@ -112,13 +117,19 @@ export class CheckOutComponent implements OnInit, OnDestroy{
                      .subscribe(response=>{
                        if(response){
                          this.address.splice(index, 1);
-                         this.userService.deleteAddress(this.userId, this.address).then(resp=>{
+                         this.userService.saveAddress(this.userId, this.address).then(resp=>{
                                this.snackbar.open("Address Deleted Successfully!!", 'OK', {
                                   duration: 3000
                                }); 
                          });
                        }
                      });
+  }
+
+  editAddress(index, address){
+    this.editAddressIndex = index;
+    this.isAddress = false;
+    this.shipping = address;
   }
 
   ngOnDestroy() {
