@@ -13,6 +13,7 @@ import { AdminAuthGuardService } from './services/admin-auth-guard.service';
 import { AuthGuardService } from 'shared/services/auth-guard.service';
 import { SharedModule } from '../shared/shared.module';
 import { AdminOrderDetailsComponent } from './components/admin-order-details/admin-order-details.component';
+import { AdminCategoriesComponent } from './components/admin-categories/admin-categories.component';
 
 @NgModule({
   imports: [
@@ -42,13 +43,18 @@ import { AdminOrderDetailsComponent } from './components/admin-order-details/adm
       path: 'admin/orders',
       component: AdminOrdersComponent,
       canActivate: [AuthGuardService, AdminAuthGuardService]
+    }, {
+      path: 'admin/categories',
+      component: AdminCategoriesComponent,
+      canActivate: [AuthGuardService, AdminAuthGuardService]
     }])
   ],
   declarations: [
   	AdminOrdersComponent,
   	AdminProductsComponent,
   	ProductFormComponent,
-  	AdminOrderDetailsComponent
+  	AdminOrderDetailsComponent,
+  	AdminCategoriesComponent
   ],
   providers: [
   	AdminAuthGuardService

@@ -110,6 +110,12 @@ export class CheckOutComponent implements OnInit, OnDestroy{
 
   cancelAddAddress(){
     this.isAddress = true;
+    this.shipping = {
+      name: '',
+      addressLine1: '',
+      addressLine2: '',
+      city: ''
+    }; 
   }
 
   deleteAddress(index){

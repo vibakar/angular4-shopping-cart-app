@@ -1,0 +1,14 @@
+<form class="form-inline" #c="ngForm" (ngSubmit)="save(c.value)">
+  <div class="form-group mx-sm-3 mb-2">
+    <input type="text" class="form-control" #cname="ngModel" [(ngModel)]="category.name" 
+    name="name" placeholder="Category Name" required />
+  </div>
+  <button [disabled]="c.invalid" class="btn btn-primary mb-2">Add Category</button>
+</form>
+<hr>
+<h4>Available Categories</h4>
+<ul class="list-group list-group-flush" *ngIf="categories$ | async as categories">
+	{{spinnerService.hide()}}
+	<li class="list-group-item" *ngFor="let category of categories">{{category.name}}</li>
+</ul>
+<ng4-loading-spinner [loadingText]="'Loading...'"> </ng4-loading-spinner>

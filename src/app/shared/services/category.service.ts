@@ -13,4 +13,10 @@ export class CategoryService {
   		}
   	});
   }
+
+  addCategory(category){
+  	var name = category.name.toLowerCase();
+  	var key = name.replace(/\s/g,'');
+  	return this.afdb.object(`/categories/${key}`).set(category);
+  }
 }
