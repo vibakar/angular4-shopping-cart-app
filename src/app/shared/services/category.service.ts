@@ -19,4 +19,8 @@ export class CategoryService {
   	var key = name.replace(/\s/g,'');
   	return this.afdb.object(`/categories/${key}`).set(category);
   }
+
+  deleteCategory(key) {
+    return this.afdb.object(`/categories/${key}`).remove();
+  }
 }

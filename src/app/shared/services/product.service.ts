@@ -26,4 +26,13 @@ export class ProductService {
   deleteProduct(productId){
   	return this.afdb.object('/products/'+productId).remove();
   }
+
+  getProductsByCategory(category){
+    return this.afdb.list('/products', {
+      query: {
+        orderByChild: 'category',
+        equalTo: category
+      }
+    })
+  }
 }
