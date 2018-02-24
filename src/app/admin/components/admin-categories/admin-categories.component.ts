@@ -42,9 +42,9 @@ export class AdminCategoriesComponent implements OnInit {
         });
       } else {
         this.modalService.confirm('Warning', `Are you sure to delete "${category.name}" category?`)
-            .subscribe((resp){
+            .subscribe((resp)=>{
              if(resp){
-               this.categoryService.deleteCategory(category.$key).then((response){
+               this.categoryService.deleteCategory(category.$key).then((response)=>{
                   this.snackbar.open(`Category "${category.name}" deleted successfully!!`, 'OK', {
                     duration: 3000
                   });

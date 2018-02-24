@@ -15,8 +15,12 @@ export class AuthService {
   	this.user$ = this.afAuth.authState;
   }
 
-  login(){
+  gmailLogin(){
   	this.afAuth.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+  }
+
+  fbLogin(){
+    this.afAuth.auth.signInWithRedirect(new firebase.auth.FacebookAuthProvider());
   }
 
   logout(){

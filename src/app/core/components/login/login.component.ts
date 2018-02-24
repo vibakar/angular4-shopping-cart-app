@@ -12,8 +12,13 @@ export class LoginComponent {
 
   constructor(private auth:AuthService, private spinnerService: Ng4LoadingSpinnerService) { }
 
-  login(){
+  gmailLogin(){
   	this.spinnerService.show();
-  	this.auth.login();
+  	this.auth.gmailLogin();
+  }
+
+  fbLogin(){
+  	this.spinnerService.show();
+  	this.auth.fbLogin();
   }
 }
