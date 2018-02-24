@@ -7,12 +7,16 @@
 			<th>Operation</th>
 		</tr>
 	</thead>
-	<tbody>
-		<tr *ngFor="let order of orders$ | async | paginate: { itemsPerPage: 10, currentPage: p }">
+	<tbody *ngIf="orders$ | async as orders">
+		<tr *ngFor="let order of orders | paginate: { itemsPerPage: 10, currentPage: p }">
 			{{ spinnerService.hide() }}
 			<td>{{ order.datePlaced }}</td>
 			<td>{{ order.status }}</td>
 			<td><a href="javascript:void(0)" (click)="orderDetails(order.$key)">Order Details</a></td>
+		</tr>
+		<tr *ngIf="orders.length === 0">
+			{{ spinnerService.hide() }}
+			<td class="text-center" colspan="3">No Orders Placed</td>
 		</tr>
 	</tbody>
 </table>
