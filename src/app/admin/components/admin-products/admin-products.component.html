@@ -1,9 +1,22 @@
-<p>
-	<a routerLink="/admin/products/new" class="btn btn-primary">Add New Product</a>
-</p>
-<p>
-	 <input type="text" class="form-control" placeholder="Search" #search (keyup)="filter(search.value)" />
-</p>
+<div class="row">
+	<div class="col-3">
+		<a routerLink="/admin/products/new" class="btn btn-primary">Add New Product</a>
+	</div>
+	<div class="col-9">
+		<div class="form-group form-inline float-right pt-10">
+			<label for="status"><strong>Filter By Category:&nbsp;&nbsp;</strong></label>
+			<select class="form-control" [(ngModel)]="currentCategory" (change)="filterByCategory(currentCategory)">
+				<option value="all">All</option>
+			    <option *ngFor="let c of categories$ | async" [value]="c.$key">{{c.name}}</option>
+			</select>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-12">
+	 <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchValue" (keyup)="searchByTitle(searchValue)" />
+	</div>
+</div>
 <table class="table">
 	<thead>
 		<tr>

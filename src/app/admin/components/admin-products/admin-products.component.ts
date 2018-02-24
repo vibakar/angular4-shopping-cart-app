@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material';
 import { Product } from 'shared/models/product';
 import { ProductService } from 'shared/services/product.service';
 import { ModalService } from 'shared/services/modal.service';
+import { CategoryService } from 'shared/services/category.service';
 
 
 @Component({
@@ -14,18 +15,22 @@ import { ModalService } from 'shared/services/modal.service';
   styleUrls: ['./admin-products.component.css']
 })
 export class AdminProductsComponent implements OnDestroy{
+  categories$;
   products: Product[];
   subscription: Subscription;
   filteredProducts: any[] = [];
+  currentCategory:string = 'all';
+  searchValue:string = '';
   p:number = 1;
   
-  constructor(private productService:ProductService,private spinnerService: Ng4LoadingSpinnerService, private modalService:ModalService, private snackbar: MatSnackBar) { 
+  constructor(private productService:ProductService,private categoryService:CategoryService, private spinnerService: Ng4LoadingSpinnerService, private modalService:ModalService, private snackbar: MatSnackBar) { 
     this.spinnerService.show();
     this.subscription = this.productService.getAllProducts()
                           .subscribe((p)=>{
                             this.spinnerService.hide();
                             return this.filteredProducts = this.products = p
                           });
+    this.categories$ = this.categoryService.getAllCategories();
   }
 
   deleteProduct(product){
@@ -40,9 +45,27 @@ export class AdminProductsComponent implements OnDestroy{
                       });
   }
 
-  filter(query: string){
-    this.filteredProducts = this.products.filter(p=>p.title.toLowerCase().includes(query.toLowerCase()));
+  searchByTitle(){
+    if(this.currentCategory == 'all'){
+      this.filteredProducts = this.products.filter(p=>p.title.toLowerCase().includes(this.searchValue.toLowerCase()));
+    } else {
+      this.filteredProducts = this.products.filter((p=>{
+       return p.category.toLowerCase() == this.currentCategory && p.title.toLowerCase().includes(this.searchValue.toLowerCase());
+     }))
+    }
   }
+
+   filterByCategory(category) {
+     this.searchValue = '';
+    if(category === 'all'){
+      this.filteredProducts = this.products;
+    } else {
+      this.filteredProducts = this.products.filter((p=>{
+       return p.category.toLowerCase() == category;
+     }))
+    }
+  }
+
 
   ngOnDestroy(){
     this.subscription.unsubscribe();
