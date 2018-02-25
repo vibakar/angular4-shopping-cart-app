@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { MatSnackBar } from '@angular/material';
+import 'rxjs/add/operator/take';
 
 import { CategoryService } from 'shared/services/category.service';
 import { ProductService } from 'shared/services/product.service';
 import { ModalService } from 'shared/services/modal.service';
-
 
 @Component({
   selector: 'app-admin-categories',
@@ -35,7 +35,7 @@ export class AdminCategoriesComponent implements OnInit {
   }
 
   deleteCategoryCheck(category){
-    this.productService.getProductsByCategory(category.$key).subscribe((response)=>{
+    this.productService.getProductsByCategory(category.name).take(1).subscribe((response)=>{
       if(response && response.length > 0){
         this.snackbar.open('Delete not allowed.Some products are available under this category', 'OK', {
           duration: 3000
@@ -54,4 +54,5 @@ export class AdminCategoriesComponent implements OnInit {
       }
     })
   }
+
 }

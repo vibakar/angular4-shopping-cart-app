@@ -7,7 +7,7 @@
 			<label for="status"><strong>Filter By Category:&nbsp;&nbsp;</strong></label>
 			<select class="form-control" [(ngModel)]="currentCategory" (change)="filterByCategory(currentCategory)">
 				<option value="all">All</option>
-			    <option *ngFor="let c of categories$ | async" [value]="c.$key">{{c.name}}</option>
+			    <option *ngFor="let c of categories$ | async" [value]="c.name">{{c.name}}</option>
 			</select>
 		</div>
 	</div>
@@ -21,16 +21,18 @@
 	<thead>
 		<tr>
 			<th>Title</th>
+			<th>Category</th>
 			<th>Price</th>
 			<th>Operations</th>
 		</tr> 
 	</thead>
 	<tbody>
 		<tr *ngIf="filteredProducts.length == 0" class="text-center">
-			<td colspan="3">No Products Found</td>
+			<td colspan="4">No Products Found</td>
 		</tr>
 		<tr *ngFor="let product of filteredProducts | paginate: { itemsPerPage: 10, currentPage: p }">
 			<td>{{product.title}}</td>
+			<td>{{product.category}}</td>
 			<td>{{product.price | currency:'USD':'symbol'}}</td>
 			<td>
 				<a [routerLink]="['/admin/products/', product.$key]">Edit</a> &nbsp;&nbsp;&nbsp;

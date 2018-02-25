@@ -50,7 +50,7 @@ export class AdminProductsComponent implements OnDestroy{
       this.filteredProducts = this.products.filter(p=>p.title.toLowerCase().includes(this.searchValue.toLowerCase()));
     } else {
       this.filteredProducts = this.products.filter((p=>{
-       return p.category.toLowerCase() == this.currentCategory && p.title.toLowerCase().includes(this.searchValue.toLowerCase());
+       return p.category.toLowerCase() == this.currentCategory.toLowerCase() && p.title.toLowerCase().includes(this.searchValue.toLowerCase());
      }))
     }
   }
@@ -61,7 +61,7 @@ export class AdminProductsComponent implements OnDestroy{
       this.filteredProducts = this.products;
     } else {
       this.filteredProducts = this.products.filter((p=>{
-       return p.category.toLowerCase() == category;
+       return p.category.toLowerCase() == category.toLowerCase();
      }))
     }
   }

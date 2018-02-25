@@ -34,7 +34,7 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
 
   processShipping(orderId, status){
     this.orderService.updateOrderStatus(orderId, status);
-    this.filterByStatus('waiting for shipping');
+    this.filterByStatus(this.currentStatus);
     this.snackbar.open(`Order "${status}" successfully!!`, 'OK', {
                     duration: 3000
                   }); 
