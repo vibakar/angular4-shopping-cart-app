@@ -1,4 +1,4 @@
-# ShoppingApp
+# Shopping cart Application
 
 This project was an `shopping cart application` developed using `angular 4` and `firebase 4`.
 
@@ -12,9 +12,11 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Docker
 
-Docker image for this application is available in [docker hub](https://hub.docker.com/r/vibakar/ng4-shoppingcart-app/)
-`docker pull vibakar/ng4-shoppingcart-app
- docker run -d -p 3000:3000 vibakar/ng4-shoppingcart-app`
+Docker image for this application is available in [Docker Hub](https://hub.docker.com/r/vibakar/ng4-shoppingcart-app/)
+```sh
+ docker pull vibakar/ng4-shoppingcart-app
+ docker run -d -p 3000:3000 vibakar/ng4-shoppingcart-app
+ ```
 
 ## Deployed in Heroku
 
