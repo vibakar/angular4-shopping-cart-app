@@ -18,10 +18,6 @@ Docker image for this application is available in [Docker Hub](https://hub.docke
  docker run -d -p 3000:3000 vibakar/ng4-shoppingcart-app
  ```
 
-## Deployed in Heroku
-
-This application is deployed in heroku.To have a look [Click Here](https://ng4shoppingapp.herokuapp.com)
-
 ## Deployed in Firebase
 
 And also this application is deployed in firebase too.To have a look [Click Here](https://shopping-app-d3e8b.firebaseapp.com)
